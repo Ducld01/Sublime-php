@@ -21,58 +21,60 @@
 	<!-- Header -->
 
 	<?php
-		include './components/header.php'
+		include './client/components/header.php'
 	?>
 
 	<!-- Menu -->
 
 	<div class="menu menu_mm trans_300">
-		<div class="menu_container menu_mm">
-			<div class="page_menu_content">
-							
-				<div class="page_menu_search menu_mm">
-					<form action="#">
-						<input type="search" required="required" class="page_menu_search_input menu_mm" placeholder="Search for products...">
-					</form>
+			<div class="menu_container menu_mm">
+				<div class="page_menu_content">
+								
+					<div class="page_menu_search menu_mm">
+						<form action="#">
+							<input type="search" required="required" class="page_menu_search_input menu_mm" placeholder="Search for products...">
+						</form>
+					</div>
+					<ul class="page_menu_nav menu_mm">
+						<li class="page_menu_item has-children menu_mm">
+							<a href="index.html">Home<i class="fa fa-angle-down"></i></a>
+							<ul class="page_menu_selection menu_mm">
+								<li class="page_menu_item menu_mm"><a href="categories.html">Categories<i class="fa fa-angle-down"></i></a></li>
+								<li class="page_menu_item menu_mm"><a href="product.html">Product<i class="fa fa-angle-down"></i></a></li>
+								<li class="page_menu_item menu_mm"><a href="cart.html">Cart<i class="fa fa-angle-down"></i></a></li>
+								<li class="page_menu_item menu_mm"><a href="checkout.html">Checkout<i class="fa fa-angle-down"></i></a></li>
+								<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
+							</ul>
+						</li>
+						<li class="page_menu_item has-children menu_mm">
+							<a href="categories.html">Categories<i class="fa fa-angle-down"></i></a>
+							<ul class="page_menu_selection menu_mm">
+							<?php 
+										require_once __DIR__ . '/admin/dao/category.php';
+										$categories = allCategories();
+										foreach ($categories as $category) {
+											echo'
+												<li class="page_menu_item menu_mm">
+													<a href="#">
+														'.$category['name_category'].'
+													<i class="fa fa-angle-down"></i>
+													</a>
+												</li>
+											';
+										}
+									?>
+							</ul>
+						</li>
+						<li class="page_menu_item menu_mm"><a href="index.html">Accessories<i class="fa fa-angle-down"></i></a></li>
+						<li class="page_menu_item menu_mm"><a href="#">Offers<i class="fa fa-angle-down"></i></a></li>
+						<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
+					</ul>
 				</div>
-				<ul class="page_menu_nav menu_mm">
-					<li class="page_menu_item has-children menu_mm">
-						<a href="index.php">Home<i class="fa fa-angle-down"></i></a>
-						<ul class="page_menu_selection menu_mm">
-							<li class="page_menu_item menu_mm"><a href="./pages/categories.php">Categories<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/product.php">Product<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/cart.php">Cart<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/checkout.php">Checkout<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/contact.php">Contact<i class="fa fa-angle-down"></i></a></li>
-						</ul>
-					</li>
-					<li class="page_menu_item has-children menu_mm">
-						<a href="./pages/categories.php">Categories<i class="fa fa-angle-down"></i></a>
-						<ul class="page_menu_selection menu_mm">
-							<li class="page_menu_item menu_mm"><a href="./pages/categories.php">Category<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/categories.php">Category<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/categories.php">Category<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="./pages/categories.php">Category<i class="fa fa-angle-down"></i></a></li>
-						</ul>
-					</li>
-					<li class="page_menu_item menu_mm"><a href="index.php">Accessories<i class="fa fa-angle-down"></i></a></li>
-					<li class="page_menu_item menu_mm"><a href="#">Offers<i class="fa fa-angle-down"></i></a></li>
-					<li class="page_menu_item menu_mm"><a href="./pages/contact.php">Contact<i class="fa fa-angle-down"></i></a></li>
-				</ul>
 			</div>
-		</div>
 
-		<div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+			<div class="menu_close"><i class="fa fa-times" aria-hidden="true"></i></div>
 
-		<div class="menu_social">
-			<ul>
-				<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-			</ul>
 		</div>
-	</div>
 	
 	<!-- Home -->
 
@@ -195,14 +197,14 @@
 	</div>
 
 	<?php
-    include './components/product.php';
+    include './client/components/product.php';
     ?>
 
 
 	<!-- Ad -->
 
 	<?php 
-	include './components/advertisement.php'
+	include './client/components/advertisement.php'
 	?>
 
 	<!-- Icon Boxes -->
