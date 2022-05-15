@@ -17,7 +17,7 @@ $IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/content/images";
 $VIEW_NAME = "index.php";
 $MESSAGE = "";
 
-function exitParma($fieldname){
+function existParam($fieldname){
     return array_key_exists($fieldname, $_REQUEST);
 }
 
@@ -37,6 +37,10 @@ function addCookie($name, $value, $day)
     setcookie($name, $value, time() + (86400 * $day), "/");
 }
 
+function getCookie($name){
+    return $_COOKIE[$name] ?? '';
+}
+
 function deleteCookie($name){
     return $_COOKIE[$name] ?? '';
 }
@@ -52,9 +56,5 @@ function checkLogin(){
         }
     }
     $_SESSION['request_uri'] = $_SERVER["REQUEST_URI"];
-    header("location: $CLIENT_URL/user/login.php"); 
+    header("location: $CLIENT_URL/pages/user/login.php"); 
 }
-
-
-
-

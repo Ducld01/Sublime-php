@@ -1,3 +1,11 @@
+<?php
+session_start();
+//tiến hành kiểm tra là người dùng đã đăng nhập hay chưa
+//nếu chưa, chuyển hướng người dùng ra lại trang đăng nhập
+if (!isset($_SESSION['user'])) {
+	 header('Location: /sublime/client/pages/user/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +29,9 @@
 	<!-- Header -->
 
 	<?php
-		include './client/components/header.php'
+		require './global.php';
+
+		include './client/components/header.php';
 	?>
 
 	<!-- Menu -->
@@ -49,25 +59,42 @@
 						<li class="page_menu_item has-children menu_mm">
 							<a href="categories.html">Categories<i class="fa fa-angle-down"></i></a>
 							<ul class="page_menu_selection menu_mm">
-							<?php 
-										require_once __DIR__ . '/admin/dao/category.php';
-										$categories = allCategories();
-										foreach ($categories as $category) {
-											echo'
-												<li class="page_menu_item menu_mm">
-													<a href="#">
-														'.$category['name_category'].'
+								<?php 
+									require_once __DIR__ . '/admin/dao/category.php';
+									$categories = allCategories();
+									foreach ($categories as $category) {
+										echo'
+											<li class="page_menu_item menu_mm">
+												<a href="#">
+													'.$category['name_category'].'
 													<i class="fa fa-angle-down"></i>
-													</a>
-												</li>
-											';
-										}
-									?>
+												</a>
+											</li>
+										';
+											}
+								?>
 							</ul>
 						</li>
 						<li class="page_menu_item menu_mm"><a href="index.html">Accessories<i class="fa fa-angle-down"></i></a></li>
 						<li class="page_menu_item menu_mm"><a href="#">Offers<i class="fa fa-angle-down"></i></a></li>
 						<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
+						<?php
+							if (isset($_SESSION['user'])) {
+								echo '
+								<li class="page_menu_item menu_mm">
+									<a href="'.$CLIENT_URL.'/pages/user/login.php">
+										Profile<i class="fa fa-angle-down"></i>
+									</a>
+								</li>
+								';
+							}
+							else {
+								echo '
+								<li class="page_menu_item menu_mm">
+									<a href="'.$CLIENT_URL.'/pages/user/login.php">Login</a>
+								</li>';
+							}
+						?>
 					</ul>
 				</div>
 			</div>

@@ -105,4 +105,34 @@
         </div>
     </div>
 
+    <!-- header login  -->
+    <div class="header_social">
+        <ul class="nav navbar-nav">
+            <?php 
+                if (isset($_SESSION['user'])) {
+                    echo '
+                    <li class="dropdown user user-menu px-4">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="text-muted">'.$user['id_user'].'</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-user"></i>Profile </a>
+                                <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/sublime/client/pages/user/logout.php">
+                            <i class="fa fa-sign-out-alt"></i> Signout </a>
+                        </ul>
+                    </li>
+                    ';
+                } else { 
+                    echo"
+                    <li><a href='$CLIENT_URL/pages/user/login.php'>Login</a></li>
+                    ";
+                }
+            ?>
+
+            <li></li>
+        </ul>
+    </div>
+
 </header>
