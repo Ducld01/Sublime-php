@@ -33,7 +33,8 @@
         if ($user) {
           if ($user['password_user'] == $password_user) {
             $_SESSION['success'] = "Login successfully!";
-            header("Location: /sublime/index.php");
+            header("location: /sublime/index.php");
+            
             if (existParam("rememberme")) {
               addCookie("name_user", $name_user, 30);
               addCookie("password_user", $password_user, 30);
@@ -42,7 +43,7 @@
               deleteCookie("name_user");
               deleteCookie("password_user");
             }
-            $_SESSION["user"] = $user;
+            $_SESSION['user'] = $user;
 
             if(isset($_SESSION['request_uri'])){
               header("location: " . $_SESSION['request_uri']);
@@ -56,15 +57,7 @@
           $_SESSION['error'] = "Username is wrong";
         }
       }
-      else {
-        if (existParam("btn_logout")) {
-          session_unset();
-        }
-        $name_user = getCookie("name_user");
-        $password_user = getCookie("password_user");
-      }
-
-      $VIEW_NAME="/admin/client/pages/user/login.php";
+      
     ?>
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -99,12 +92,14 @@
                                         id="exampleInputEmail1" required placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" required name="password_user" class="form-control form-control-lg"
-                                        id="exampleInputPassword1" placeholder="Password">
+                                    <input type="password" required name="password_user"
+                                        class="form-control form-control-lg" id="exampleInputPassword1"
+                                        placeholder="Password">
                                 </div>
                                 <div class="form-check mx-sm-2">
                                     <label class="form-check-label">
-                                        <input type="checkbox" name="rememberme" class="form-check-input" > Remember me </label>
+                                        <input type="checkbox" name="rememberme" class="form-check-input"> Remember me
+                                    </label>
                                 </div>
                                 <div class="mt-3">
                                     <button name="btn-lg"

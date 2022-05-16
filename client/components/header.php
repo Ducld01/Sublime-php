@@ -110,10 +110,12 @@
         <ul class="nav navbar-nav">
             <?php 
                 if (isset($_SESSION['user'])) {
+                    $username = (isset($_SESSION['user'])) ? $_SESSION['user'] : null;
+                    // có thể dùng var_dump() để check 
                     echo '
                     <li class="dropdown user user-menu px-4">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="text-muted">'.$user['id_user'].'</span>
+                        <a class="dropdown-toggle" data-toggle="dropdown" cursor-pointer>
+                            <span class="text-muted">'.$username['name_user'].'</span>
                         </a>
                         <ul class="dropdown-menu">
                             <a class="dropdown-item" href="#">

@@ -45,16 +45,16 @@ function deleteCookie($name){
     return $_COOKIE[$name] ?? '';
 }
 
-function checkLogin(){
-    global $CLIENT_URL;
-    if (isset($_SESSION['user'])) {
-        if ($_SESSION['user']['role'] == 1) {
-            return;
-        }
-        if (strpos($_SERVER["REQUEST_URL"], '/admin/') === false) {
-            return;
-        }
-    }
-    $_SESSION['request_uri'] = $_SERVER["REQUEST_URI"];
-    header("location: $CLIENT_URL/pages/user/login.php"); 
-}
+// function checkLogin(){
+//     global $CLIENT_URL;
+//     if (isset($_SESSION['user'])) {
+//         if ($_SESSION['user']['role'] == 1) {
+//             return;
+//         }
+//         if (strpos($_SERVER["REQUEST_URL"], '/admin/') === false) {
+//             return;
+//         }
+//     }
+//     $_SESSION['request_uri'] = $_SERVER["REQUEST_URI"];
+//     header("location: $CLIENT_URL/pages/user/login.php"); 
+// }

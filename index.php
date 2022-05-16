@@ -1,9 +1,18 @@
 <?php
-session_start();
+// session_start();
+require './global.php';
 //tiến hành kiểm tra là người dùng đã đăng nhập hay chưa
 //nếu chưa, chuyển hướng người dùng ra lại trang đăng nhập
 if (!isset($_SESSION['user'])) {
 	 header('Location: /sublime/client/pages/user/login.php');
+}
+// sau khi đăng nhập check role, nếu role là admin thì chuyển dến trang admin
+// nếu role là user thì sẽ ở lại trang index
+if (isset($_SESSION['user'])) {
+	$user = $_SESSION['user'];
+	if ($user['role_user'] == 'ADMIN') {
+		header('Location: /sublime/admin/index.php');
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -29,8 +38,6 @@ if (!isset($_SESSION['user'])) {
 	<!-- Header -->
 
 	<?php
-		require './global.php';
-
 		include './client/components/header.php';
 	?>
 

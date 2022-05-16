@@ -1,3 +1,10 @@
+<?php
+ require '../global.php';
+
+ if (!isset($_SESSION['user'])) {
+  header('Location: /sublime/client/pages/user/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
