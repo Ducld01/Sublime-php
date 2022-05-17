@@ -115,7 +115,7 @@
                     echo '
                     <li class="dropdown user user-menu px-4">
                         <a class="dropdown-toggle" data-toggle="dropdown" cursor-pointer>
-                            <span class="text-muted">'.$username['name_user'].'</span>
+                            <span class="text-muted">'.$username['fullname_user'].'</span>
                         </a>
                         <ul class="dropdown-menu">
                             <a class="dropdown-item" href="#">

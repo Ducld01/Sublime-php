@@ -72,17 +72,18 @@
                                             <?php
                                             $items = getAllUsers();
                                                 foreach ($items as $item){
+                                                    $image =(!empty($item['image_user'])) ? '../../../client/images/'.$item['image_user'] : '../../assets/images/faces-clipart/pic-1.png';
                                                     echo "
                                                     <tr>
                                                         <th><input type='checkbox' name='id_user[]' value='".$item['id_user']."'></th>
                                                         <td class='py-1'>
-                                                            <img src='../../assets/images/faces-clipart/pic-1.png' alt='image' />
+                                                            <img src='".$image."' alt='image' />
                                                         </td>
                                                         <td>".$item['name_user']."</td>
                                                         <td>".$item['email_user']."</td>
                                                         <td><label class='badge badge-danger'>".$item['role_user']."</label></td>
                                                         <td class='d-flex'>
-                                                            <a href='$ADMIN_URL/pages/users/editUser.php?edituser&name_user=".$item['name_user']."' class='nav-link'>
+                                                            <a href='$ADMIN_URL/pages/users/editUser.php?edituser&id_user=".$item['id_user']."' class='nav-link'>
                                                                 <button class='btn btn-inverse-success btn-fw'><i class='fa fa-edit'></i> Edit</button>
                                                             </a>
                                                             <a class='nav-link' href='#'>

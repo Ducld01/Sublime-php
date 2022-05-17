@@ -11,7 +11,7 @@
                         <?php
                             if (isset($_SESSION['user'])) {
                                 $username = (isset($_SESSION['user'])) ? $_SESSION['user'] : null;
-                                echo '<span class="font-weight-bold mb-2">'.$username['name_user'].'</span>';
+                                echo '<span class="font-weight-bold mb-2">'.$username['fullname_user'].'</span>';
                             }
                         ?>
                     </div>
