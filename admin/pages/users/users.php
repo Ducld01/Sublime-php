@@ -46,7 +46,7 @@
                             </span>
                             Users
                         </h3>
-                        <a href="" class="nav-link">
+                        <a href="./newUser.php" class="nav-link">
                             <button type="button" class="btn btn-success btn-fw">Add User</button>
                         </a>
 

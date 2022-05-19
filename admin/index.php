@@ -4,6 +4,12 @@
  if (!isset($_SESSION['user'])) {
   header('Location: /sublime/client/pages/user/login.php');
 }
+  if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    if ($user['role_user'] == 'USER') {
+      header('Location: /sublime/index.php');
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -32,7 +32,6 @@
           $email_user = $_POST['email_user'];
           $password_user = $_POST['password_user'];
           $confirm_password = $_POST['confirm_password'];
-          $image_user = $_POST['image_user'];
           $status_user = $_POST['status_user'];
           $role_user = $_POST['role_user'];
           $regexUsername = '/^[a-zA-Z0-9_]{5,30}$/';
@@ -51,12 +50,17 @@
           } else if ($password_user !==$confirm_password) {
             $_SESSION['error'] = 'Confirm password is not matching';
           } else{
-            $filename = $_FILES['image_user']['name'];
+            $filename = $_FILES['image']['name'];
             if(!empty($filename)){
-              move_uploaded_file($_FILES['image_user']['tmp_name'], '../../images/'.$filename);	
+              move_uploaded_file($_FILES['image']['tmp_name'], '../../images/'.$filename);
+              if (move_uploaded_file($_FILES['image']['tmp_name'], '../../images/'.$filename)) {
+                echo "Image uploaded successfully";
+              } else {
+                echo "Image uploaded failed";
+              }
             }
             try{
-              addUser($name_user, $fullname_user, $email_user, $password_user, $image_user, $status_user, $role_user);
+              addUser($name_user, $fullname_user, $password_user, $filename, $email_user, $status_user, $role_user);
               $_SESSION['success'] = 'User added successfully';
               header('Location: login.php');
             }
@@ -90,10 +94,10 @@
                           }
                         ?>
                         <div class="auth-form-light text-left p-5">
-                            <div class="logo"><a href="#">Sublime.</a></div>
+                            <div class="logo"><a href="">Sublime.</a></div>
                             <h4>New here?</h4>
                             <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-                            <form class="pt-3" method="post" action="register.php">
+                            <form class="pt-3" method="post" action="register.php" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <input type="text" name="name_user" class="form-control form-control-lg"
                                         id="exampleInputUsername1" placeholder="Username" required>
@@ -117,7 +121,7 @@
                                         <input type="hidden" name="status_user" value="1">
                                 </div>
                                 <div class="form-group">
-                                    <input type="file" name="image_user" class="file-upload-default">
+                                    <input type="file" name="image" id="image" class="file-upload-default">
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled
                                             placeholder="Image">

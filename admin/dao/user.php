@@ -2,8 +2,13 @@
 require_once 'connect.php';
 
 function addUser ($name_user, $fullname_user, $password_user, $image_user, $email_user, $status_user, $role_user){
-    $sql = "INSERT INTO users(name_user,fullname_user, password_user, image_user, email_user, status_user, role_user) VALUES(?,?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users(name_user,fullname_user, password_user, image_user, email_user, status_user, role_user) VALUES(?, ?, ?, ?, ?, ?, ?)";
     pdo_execute($sql, $name_user,$fullname_user, $password_user, $image_user, $email_user, $status_user==1, $role_user);
+}
+
+function addUserByAdmin ($name_user, $fullname_user, $password_user, $image_user, $email_user, $status_user, $role_user){
+    $sql = "INSERT INTO users(name_user,fullname_user, password_user, image_user, email_user, status_user, role_user) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    pdo_execute($sql, $name_user, $fullname_user, $password_user, $image_user, $email_user, $status_user, $role_user);
 }
 
 function updateUser( $id_user, $name_user, $fullname_user,  $email_user, $status_user, $role_user){
@@ -31,6 +36,11 @@ function getAllUsers(){
 function getUserById($id_user){
     $sql = "SELECT * FROM users WHERE id_user=?";
     return pdo_query_one($sql, $id_user);
+}
+
+function getUserByUsername($name_user){
+    $sql = "SELECT * FROM users WHERE name_user=?";
+    return pdo_query_one($sql, $name_user);
 }
 
 function existUser($email_user){

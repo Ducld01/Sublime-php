@@ -10,7 +10,7 @@ $CLIENT_URL = "$ROOT_URL/client";
 
 // ----------------------------------------------------------------
 
-$IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/content/images";
+$IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/client/images";
 
 // ----------------------------------------------------------------
 

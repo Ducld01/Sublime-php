@@ -29,7 +29,7 @@
       extract($_REQUEST);
 
       if (existParam("btn-lg")) {
-        $user = getUserById($name_user);
+        $user = getUserByUsername($name_user);
         if ($user) {
           if ($user['password_user'] == $password_user) {
             $_SESSION['success'] = "Login successfully!";
