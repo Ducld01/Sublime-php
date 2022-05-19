@@ -5,9 +5,9 @@ function create_category($name_category){
     $sql = "INSERT INTO categories(name_category) VALUES (?)";
     pdo_execute($sql, $name_category);
 }
-function updateCategory($id_category,$name_category){
-    $sql = "UPDATE categories SET name_category = ? WHERE id_category = ?";
-    pdo_execute($sql, $id_category, $name_category);
+function updateCategory($id_category, $name_category){
+    $sql = "UPDATE categories SET name_category=? WHERE id_category=?";
+    pdo_execute($sql, $name_category, $id_category);
 }
 function deleteCategory($id_category){
     $sql = "DELETE FROM categories WHERE id_category =?";
@@ -27,7 +27,7 @@ function categoryById($id_category){
     $sql = "SELECT * FROM categories WHERE id_category=?";
     return pdo_query_one($sql, $id_category);
 }
-function categoryExists($id_category){
-    $sql = "SELECT count(*) FROM categories WHERE id_category =?";
-    return pdo_query_value($sql, $id_category) > 0;
+function categoryExists($name_category){
+    $sql = "SELECT count(*) FROM categories WHERE name_category =?";
+    return pdo_query_value($sql, $name_category) > 0;
 }

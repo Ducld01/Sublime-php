@@ -75,22 +75,24 @@
                             Users
                         </h3>
                         <?php
-                            if (isset($_SESSION['success'])) {
-                                echo "
-                                <div class='alert alert-success' role='alert'>
-                                    ".$_SESSION['success']."
+                           if (isset($_SESSION['error'])) {
+                            echo "
+                                <div class='alert alert-danger d-flex align-items-center justify-content-between px-4' role='alert'>
+                                        ".$_SESSION['error']."
+                                        <button type'button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                 </div>
-                                ";
-                                unset($_SESSION['success']);
-                            }
-                            if (isset($_SESSION['error'])) {
-                                echo "
-                                <div class='alert alert-warning' role='alert'>
-                                    ".$_SESSION['error']."
+                                    ";
+                                    unset($_SESSION['error']);
+                        }
+                        if (isset($_SESSION['success'])) {
+                            echo "
+                                <div class='alert alert-success d-flex align-items-center justify-content-between px-4' role='alert'>
+                                        ".$_SESSION['success']."
+                                        <button type'button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                 </div>
-                                ";
-                                unset($_SESSION['error']);
-                            }
+                                    ";
+                                    unset($_SESSION['success']);
+                        }
                         ?>
                     </div>
                     <div class="row">
