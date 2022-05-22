@@ -32,3 +32,8 @@ function getProductById($id_product){
     $sql = "SELECT * FROM products WHERE id_product=?";
     return pdo_query_one($sql,$id_product);
 }
+
+function getRelatedProductsById($id_category){
+    $sql = "SELECT * FROM products WHERE id_category=?";
+    return pdo_query($sql,$id_category);
+}
