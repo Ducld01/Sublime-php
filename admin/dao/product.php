@@ -37,3 +37,23 @@ function getRelatedProductsById($id_category){
     $sql = "SELECT * FROM products WHERE id_category=?";
     return pdo_query($sql,$id_category);
 }
+
+function hadleFilterPaginations(){
+    $row_per_page = 8;
+    $total_row = pdo_query_value("SELECT * FROM products");
+    $total_page = ceil($total_row / $row_per_page);
+
+    $current_page = existParam("page_no") ? $_REQUEST['page_no'] : 1;
+    if ($current_page < 1) {
+        $current_page = 1;
+    }
+    if ($current_page > $total_page){
+        $current_page = $total_page;
+    }
+    $start = ($current_page-1)* $row_per_page;
+    $sql = "SELECT * FROM products ORDER BY id_category LIMIT {$start}, {$row_per_page}";
+    $_SESSION['total_page']= $total_page;
+    $_SESSION['prev_page']= ($current_page > 1) ? ($current_page - 1):1;
+    $_SESSION['next_page']= ($current_page < $total_page) ? ($current_page + 1):$total_page;
+    return pdo_query($sql);
+}

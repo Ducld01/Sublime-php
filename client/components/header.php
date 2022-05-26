@@ -7,16 +7,9 @@
                         <div class="logo"><a href="/sublime/index.php">Sublime.</a></div>
                         <nav class="main_nav">
                             <ul>
-                                <li class="hassubs active">
-                                    <a href="index.php">Home</a>
-                                    <ul>
-                                        <li><a href="./pages/categories.php">Categories</a></li>
-                                        <li><a href="./pages/product.php">Product</a></li>
-                                        <li><a href="./pages/cart.php">Cart</a></li>
-                                        <li><a href="./pages/checkout.php">Check out</a></li>
-                                        <li><a href="./pages/contact.php">Contact</a></li>
-                                        <li><a href="./admin/index.php">Admin</a></li>
-                                    </ul>
+                                <li class="hassub active">
+                                    <a href="/sublime/index.php">Home</a>
+                                    
                                 </li>
 
                                 <li class="hassubs">
@@ -38,14 +31,14 @@
 									    ?>
                                     </ul>
                                 </li>
-                                <li><a href="#">Accessories</a></li>
+                                <li><a href="<?=$CLIENT_URL?>/pages/categories.php">Products</a></li>
                                 <li><a href="#">Offers</a></li>
                                 <li><a href="./pages/contact.php">Contact</a></li>
                             </ul>
                         </nav>
                         <div class="header_extra ml-auto">
                             <div class="shopping_cart">
-                                <a href="cart.html">
+                                <a href="/sublime/client/pages/cart.php">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 489 489"
                                         style="enable-background:new 0 0 489 489;" xml:space="preserve">
@@ -57,7 +50,11 @@
 													c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-41h45.2l26.9,302.3C412.8,445.2,392.1,462,366.8,462z" />
                                         </g>
                                     </svg>
-                                    <div>Cart <span>(0)</span></div>
+                                    <?php
+                                        $user = $_SESSION['user'];
+                                        $numCart = countCart($user['id_user']);
+                                    ?>
+                                    <div>Cart <span>(<?php echo $numCart; ?>)</span></div>
                                 </a>
                             </div>
                             <div class="search">

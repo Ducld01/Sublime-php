@@ -122,7 +122,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 col-form-label">Sales</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" name="sales" class="form-control" placeholder="Sales" required/>
+                                                        <input type="text" name="sales" class="form-control" placeholder="Sales" />
                                                         <input type="hidden" name="viewnumber" value="0" class="form-control" />
                                                     </div>
                                                 </div>

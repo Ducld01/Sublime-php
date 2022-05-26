@@ -307,7 +307,6 @@ function getRow(id) {
         },
         dataType: 'json',
         success: function(response) {
-            console.log(response);
             $('.category_id').val(response.id_category);
             $('#Inputname').val(response.name_category);
             $('.cname').html(response.name_category);
