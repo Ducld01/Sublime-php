@@ -11,26 +11,6 @@
                                     <a href="/sublime/index.php">Home</a>
                                     
                                 </li>
-
-                                <li class="hassubs">
-                                    <a href="#">Categories</a>
-                                    <ul>
-                                        <?php 
-										require_once __DIR__ . '/../../admin/dao/category.php';
-										$categories = allCategories();
-										foreach ($categories as $category) {
-											echo'
-												<li class="page_menu_item menu_mm">
-													<a href="#">
-														'.$category['name_category'].'
-													<i class="fa fa-angle-down"></i>
-													</a>
-												</li>
-											';
-										}
-									    ?>
-                                    </ul>
-                                </li>
                                 <li><a href="<?=$CLIENT_URL?>/pages/categories.php">Products</a></li>
                                 <li><a href="#">Offers</a></li>
                                 <li><a href="./pages/contact.php">Contact</a></li>
