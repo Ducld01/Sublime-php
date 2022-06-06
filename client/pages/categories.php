@@ -209,7 +209,7 @@
                                 </li>
                                 <?php
                 				for($i = 1; $i<=$_SESSION['total_page']; $i++)
-                    				echo "<li class='page-item'><a class='page-link' href='?page=$i'>$i</a></li> ";
+                    				echo "<li class='page-item'><a class='page-link' href='??&page=$i'>$i</a></li> ";
                     			?>
                                 <li class="page-item">
                                     <a class="page-link" href="?&page=<?=$_SESSION['next_page']?>" aria-label="Next">
