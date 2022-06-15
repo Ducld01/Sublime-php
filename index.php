@@ -267,21 +267,14 @@ if (isset($_SESSION['user'])) {
         <div class="products">
             <div class="container">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-lg-12">
                         <div class="text-center mb-4">
                             <h3 class="title_heading" style="color: #000000">Our Products</h3>
                         </div>
-                        <ul class="nav menu-titles justify-content-center">
+                        <ul class="nav menu-titles justify-content-center" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active"  data-toggle="tab">All</a>
+                                <a class="nav-link active" id="all"  data-toggle="tab" href="#tab_1" role="tab" aria-controls="All" aria-selected="true">All</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab">Best Sellers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab">Sales</a>
-                            </li>
-
                         </ul>
                         <style>
                         .title_heading {
@@ -308,6 +301,7 @@ if (isset($_SESSION['user'])) {
                         .menu-titles li {
                             margin-left: 25px;
                             margin-right: 25px;
+                            cursor: pointer;
                         }
 
                         .menu-titles li a {
@@ -354,7 +348,7 @@ if (isset($_SESSION['user'])) {
                             width: 50%;
                         }
                         </style>
-                        <div class="product_grid">
+                            <div class="product_grid" >
                             <!-- Product -->
                             <?php
                                 foreach ($products as $product) {
@@ -376,7 +370,8 @@ if (isset($_SESSION['user'])) {
                             ?>
 
                         </div>
-
+                         
+                           
                     </div>
                 </div>
             </div>
@@ -498,6 +493,7 @@ if (isset($_SESSION['user'])) {
             </div>
         </footer>
     </div>
+    
 
     <script src="./client/js/jquery-3.2.1.min.js"></script>
     <script src="./client/styles/bootstrap4/popper.js"></script>
@@ -512,6 +508,31 @@ if (isset($_SESSION['user'])) {
     <script src="./client/plugins/easing/easing.js"></script>
     <script src="./client/plugins/parallax-js-master/parallax.min.js"></script>
     <script src="./client/js/custom.js"></script>
+    <!-- <script>
+        $(document).ready(function() {
+            $('#nav1').on('click', function(){
+                $('#tab_1').addClass('show');
+                $('#tab_2').addClass('hidden');
+                $('#tab_2').removeClass('show');
+                $('#tab_3').addClass('hidden');
+                $('#tab_2').removeClass('show');
+            })
+            $('#nav2').on('click', function(){
+                $('#tab_2').addClass('show');
+                $('#tab_1').addClass('hidden');
+                $('#tab_1').removeClass('show');
+                $('#tab_3').addClass('hidden');
+                $('#tab_3').removeClass('show');
+            })
+            $('#nav3').on('click', function(){
+                $('#tab_3').addClass('show');
+                $('#tab_2').addClass('hidden');
+                $('#tab_2').removeClass('show');
+                $('#tab_1').addClass('hidden');
+                $('#tab_1').removeClass('show');
+            })
+        })
+    </script> -->
 </body>
 
 </html>

@@ -121,12 +121,12 @@ if (isset($_SESSION['user'])) {
                   <h4 class="font-weight-normal mb-3">Sales Today <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                   </h4>
                   <?php
-                  $today = date("Y-m-d");
-                  $sql = "SELECT * FROM orders LEFT JOIN products ON products.id_product = orders.id_product WHERE orders.createAt=$today";
+                  $now = date("Y-m-d");
+                  $sql = "SELECT * FROM orders LEFT JOIN products ON products.id_product = orders.id_product WHERE createAt_order=$now";
                   $sale = 0;
-                  $sales = pdo_query($sql);
-                  foreach ($sales as $item) {
-                    $subtotal = $item['price_product'] * $item['quantity_product'];
+                  $it = pdo_query($sql);
+                  foreach ($it as $product) {
+                    $subtotal = $product['price_product']*$product['quantity_product'];
                     $sale += $subtotal;
                   }
                   echo '<h2 class="mb-5">'.$sale.'</h2>';
@@ -136,23 +136,14 @@ if (isset($_SESSION['user'])) {
             </div>
           </div>
           <div class="row">
-            <div class="col-md-7 grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="clearfix">
-                    <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+                    <h4 class="card-title float-left">Sale</h4>
                     <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
                   </div>
                   <canvas id="visit-sale-chart" class="mt-4"></canvas>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-5 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Traffic Sources</h4>
-                  <canvas id="traffic-chart"></canvas>
-                  <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
                 </div>
               </div>
             </div>
@@ -173,6 +164,30 @@ if (isset($_SESSION['user'])) {
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+  <?php
+  $months = array();
+  $sales = array();
+  $year = date('Y');
+  for ($m = 1; $m <= 12; $m++) {
+    try {
+      $sql = "SELECT * FROM orders LEFT JOIN products ON products.id_product = orders.id_product WHERE MONTH(createAt_order)=$m AND YEAR(createAt_order)=$year";
+      $totals = 0;
+      $saless = pdo_query($sql);
+      foreach ($saless as $items) {
+        $subtotal = $items['price_product'] * $items['quantity_product'];
+        $totals += $subtotal;
+      }
+      array_push($sales, round($totals, 2));
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+    }
+    $num = str_pad($m, 2, 0, STR_PAD_LEFT);
+    $month =  date('M', mktime(0, 0, 0, $m, 1));
+    array_push($months, $month);
+  }
+  $months = json_encode($months);
+  $sales = json_encode($sales);
+  ?>
   <!-- plugins:js -->
   <script src="assets/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
@@ -186,8 +201,187 @@ if (isset($_SESSION['user'])) {
   <script src="assets/js/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
-  <script src="assets/js/dashboard.js"></script>
-  <script src="assets/js/todolist.js"></script>
+  <script>
+    (function($) {
+      'use strict';
+      $(function() {
+
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+        if ($("#visit-sale-chart").length) {
+          Chart.defaults.global.legend.labels.usePointStyle = true;
+          var ctx = document.getElementById('visit-sale-chart').getContext("2d");
+
+          var gradientStrokeViolet = ctx.createLinearGradient(0, 0, 0, 181);
+          gradientStrokeViolet.addColorStop(0, 'rgba(218, 140, 255, 1)');
+          gradientStrokeViolet.addColorStop(1, 'rgba(154, 85, 255, 1)');
+          var gradientLegendViolet = 'linear-gradient(to right, rgba(218, 140, 255, 1), rgba(154, 85, 255, 1))';
+
+          var gradientStrokeBlue = ctx.createLinearGradient(0, 0, 0, 360);
+          gradientStrokeBlue.addColorStop(0, 'rgba(54, 215, 232, 1)');
+          gradientStrokeBlue.addColorStop(1, 'rgba(177, 148, 250, 1)');
+          var gradientLegendBlue = 'linear-gradient(to right, rgba(54, 215, 232, 1), rgba(177, 148, 250, 1))';
+
+          var gradientStrokeRed = ctx.createLinearGradient(0, 0, 0, 300);
+          gradientStrokeRed.addColorStop(0, 'rgba(255, 191, 150, 1)');
+          gradientStrokeRed.addColorStop(1, 'rgba(254, 112, 150, 1)');
+          var gradientLegendRed = 'linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))';
+
+          var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: <?php echo $months; ?>,
+              datasets: [{
+                label: "Sales",
+                borderColor: gradientStrokeBlue,
+                backgroundColor: gradientStrokeBlue,
+                hoverBackgroundColor: gradientStrokeBlue,
+                legendColor: gradientLegendBlue,
+                pointRadius: 0,
+                fill: false,
+                borderWidth: 1,
+                fill: 'origin',
+                data: <?php echo $sales; ?>
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: false,
+              legendCallback: function(chart) {
+                var text = [];
+                text.push('<ul>');
+                for (var i = 0; i < chart.data.datasets.length; i++) {
+                  text.push('<li><span class="legend-dots" style="background:' +
+                    chart.data.datasets[i].legendColor +
+                    '"></span>');
+                  if (chart.data.datasets[i].label) {
+                    text.push(chart.data.datasets[i].label);
+                  }
+                  text.push('</li>');
+                }
+                text.push('</ul>');
+                return text.join('');
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    display: false,
+                    min: 0
+                  },
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(235,237,242,1)',
+                    zeroLineColor: 'rgba(235,237,242,1)'
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    display: false,
+                    drawBorder: false,
+                    color: 'rgba(0,0,0,1)',
+                    zeroLineColor: 'rgba(235,237,242,1)'
+                  },
+                  ticks: {
+                    padding: 20,
+                    fontColor: "#9c9fa6",
+                    autoSkip: true,
+                  },
+                  categoryPercentage: 0.5,
+                  barPercentage: 0.5
+                }]
+              }
+            },
+            elements: {
+              point: {
+                radius: 0
+              }
+            }
+          })
+          $("#visit-sale-chart-legend").html(myChart.generateLegend());
+        }
+        if ($("#traffic-chart").length) {
+          var gradientStrokeBlue = ctx.createLinearGradient(0, 0, 0, 181);
+          gradientStrokeBlue.addColorStop(0, 'rgba(54, 215, 232, 1)');
+          gradientStrokeBlue.addColorStop(1, 'rgba(177, 148, 250, 1)');
+          var gradientLegendBlue = 'linear-gradient(to right, rgba(54, 215, 232, 1), rgba(177, 148, 250, 1))';
+
+          var gradientStrokeRed = ctx.createLinearGradient(0, 0, 0, 50);
+          gradientStrokeRed.addColorStop(0, 'rgba(255, 191, 150, 1)');
+          gradientStrokeRed.addColorStop(1, 'rgba(254, 112, 150, 1)');
+          var gradientLegendRed = 'linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))';
+
+          var gradientStrokeGreen = ctx.createLinearGradient(0, 0, 0, 300);
+          gradientStrokeGreen.addColorStop(0, 'rgba(6, 185, 157, 1)');
+          gradientStrokeGreen.addColorStop(1, 'rgba(132, 217, 210, 1)');
+          var gradientLegendGreen = 'linear-gradient(to right, rgba(6, 185, 157, 1), rgba(132, 217, 210, 1))';
+
+          var trafficChartData = {
+            datasets: [{
+              data: [30, 30, 40],
+              backgroundColor: [
+                gradientStrokeBlue,
+                gradientStrokeGreen,
+                gradientStrokeRed
+              ],
+              hoverBackgroundColor: [
+                gradientStrokeBlue,
+                gradientStrokeGreen,
+                gradientStrokeRed
+              ],
+              borderColor: [
+                gradientStrokeBlue,
+                gradientStrokeGreen,
+                gradientStrokeRed
+              ],
+              legendColor: [
+                gradientLegendBlue,
+                gradientLegendGreen,
+                gradientLegendRed
+              ]
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+              'Search Engines',
+              'Direct Click',
+              'Bookmarks Click',
+            ]
+          };
+          var trafficChartOptions = {
+            responsive: true,
+            animation: {
+              animateScale: true,
+              animateRotate: true
+            },
+            legend: false,
+            legendCallback: function(chart) {
+              var text = [];
+              text.push('<ul>');
+              for (var i = 0; i < trafficChartData.datasets[0].data.length; i++) {
+                text.push('<li><span class="legend-dots" style="background:' +
+                  trafficChartData.datasets[0].legendColor[i] +
+                  '"></span>');
+                if (trafficChartData.labels[i]) {
+                  text.push(trafficChartData.labels[i]);
+                }
+                text.push('<span class="float-right">' + trafficChartData.datasets[0].data[i] + "%" + '</span>')
+                text.push('</li>');
+              }
+              text.push('</ul>');
+              return text.join('');
+            }
+          };
+          var trafficChartCanvas = $("#traffic-chart").get(0).getContext("2d");
+          var trafficChart = new Chart(trafficChartCanvas, {
+            type: 'doughnut',
+            data: trafficChartData,
+            options: trafficChartOptions
+          });
+          $("#traffic-chart-legend").html(trafficChart.generateLegend());
+        }
+      });
+    })(jQuery);
+  </script>
+  <!-- <script src="assets/js/todolist.js"></script> -->
   <!-- End custom js for this page -->
 </body>
 

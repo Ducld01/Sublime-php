@@ -16,6 +16,14 @@ function getAllProducts(){
     $sql = "SELECT * FROM products";
     return pdo_query($sql);
 }
+function getSpecialProducts(){
+    $sql = "SELECT * FROM products WHERE special_product=0";
+    return pdo_query($sql);
+}
+function getSaleProducts(){
+    $sql = "SELECT * FROM products WHERE sale_product > 0";
+    return pdo_query($sql);
+}
 
 function deleteProduct ($id_product){
     $sql = "DELETE FROM products WHERE id_product =?";
